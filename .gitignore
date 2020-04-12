@@ -1,0 +1,8 @@
+# credentials
+# credentials/*.json
+credentials/*.json
+# node_modules
+node_modules
+# node_modules/*.*
+
+node_modules/*.*
