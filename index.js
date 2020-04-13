@@ -4,8 +4,9 @@ const robots = {
 }
 
 async function start(){
-
-     let content = {}
+    const content = {
+        maximumSenteces: 10
+    }
 
      content.searchTerm = askAndReturnSearchTerm()
      content.prefix = askAndReturnPrefix()
@@ -25,7 +26,7 @@ async function start(){
         
     }
 
-    console.log(content)
+    console.log(JSON.stringify(content, null, 4))
     
 }
 
