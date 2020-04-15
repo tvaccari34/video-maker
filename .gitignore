@@ -9,5 +9,6 @@ node_modules/*.*
 #content
 content.json
 content/*.png
+content/*.jpg
 
 .DS_Store
