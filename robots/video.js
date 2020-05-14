@@ -1,15 +1,19 @@
 const gm = require('gm').subClass({imageMagick: true})
 const state = require('./state.js')
+const spawn = require('child_process').spawn
+const path = require('path')
+const rootPath = path.resolve(__dirname, '..')
 
 async function robot(){
     const content = state.load()
 
-    // await convertAllImages(content)
-    // await createAllSentenceImages(content)
-    // await createYouTubeThumbnail()
+    await convertAllImages(content)
+    await createAllSentenceImages(content)
+    await createYouTubeThumbnail()
     await createAfterEffectsScript(content)
+    await renderVideoWithAfterEffects()
 
-    //state.save(content)
+    state.save(content)
 
     async function convertAllImages(content){
         for(let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++){
@@ -133,6 +137,31 @@ async function robot(){
 
    async function createAfterEffectsScript(content){
        await state.saveScript(content)
+   }
+
+   async function renderVideoWithAfterEffects(content){
+       return new Promise((resolve, reject) =>{
+           const aerenderFilePath = `c:\\Program Files\\Adobe\\Adobe After Effects 2020\\Support Files\\aerender`
+           const templateFilePath = `${rootPath}\\templates\\1\\template.aep`
+           const destinationFilePath = `${rootPath}\\content\\output.mov`
+
+           console.log('> Starting After Effects')
+
+           const aerender = spawn(aerenderFilePath, [
+               '-comp', 'main',
+               '-project', templateFilePath,
+               '-output', destinationFilePath
+           ])
+
+           aerender.stdout.on('data', (data) =>{
+               process.stdout.write(data)
+           })
+
+           aerender.on('close', () =>{
+               console.log('> After Effects closed')
+               resolve()
+           })
+       })
    }
 }
 

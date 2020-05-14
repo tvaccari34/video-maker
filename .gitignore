@@ -10,5 +10,10 @@ node_modules/*.*
 content.json
 content/*.png
 content/*.jpg
+content/*.mov
+content/
+
+#templates
+templates
 
 .DS_Store
