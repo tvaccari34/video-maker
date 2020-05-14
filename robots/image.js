@@ -11,7 +11,7 @@ async function robot(){
     await fetchImagesOfAllSentences(content)
     await downloadAllImages(content)
     
-    // state.save(content)
+    state.save(content)
 
     async function fetchImagesOfAllSentences(content){
         for(const sentence of content.sentences) {
@@ -28,7 +28,7 @@ async function robot(){
             cx: googleSearchCredentials.searchEngineID,
             q: query,
             searchType: 'image',
-            num: 2
+            num: 3
         })
 
         const imagesUrl = response.data.items.map((item) =>{
